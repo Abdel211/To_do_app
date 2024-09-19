@@ -99,29 +99,29 @@
 </head>
 <body>
     <div class="container">
-        <h1>Task Lists</h1>
+        <h1>Liste de tâches</h1>
 
         <form id="taskForm">
             <input type="text" id="taskInput" placeholder="Nouvelle tâche..." required />
 
             <!-- Nouveau champ : Catégories -->
             <select id="categoryInput">
-                <option value="Personnel">Personal</option>
-                <option value="Travail">Work</option>
-                <option value="Autre">Others</option>
+                <option value="Personnel">Personnel</option>
+                <option value="Travail">Travail</option>
+                <option value="Autre">Autre</option>
             </select>
 
             <!-- Nouveau champ : Priorité -->
             <select id="priorityInput">
-                <option value="Basse">Low</option>
-                <option value="Moyenne">Medium</option>
-                <option value="Haute">High</option>
+                <option value="Basse">Basse</option>
+                <option value="Moyenne">Moyenne</option>
+                <option value="Haute">Haute</option>
             </select>
 
             <!-- Nouveau champ : Date d'échéance -->
             <input type="date" id="dueDateInput" required />
 
-            <button type="submit">Add a task</button>
+            <button type="submit">Ajouter une tâche</button>
         </form>
 
         <ul id="taskList"></ul>
