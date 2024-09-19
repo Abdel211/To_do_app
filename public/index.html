@@ -4,52 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application To-Do</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Ton CSS existant */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            width: 100%;
+            max-width: 400px;
             padding: 20px;
-            background-color: #f4f4f4;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
             text-align: center;
-        }
-
-        #taskForm {
+            color: #333;
             margin-bottom: 20px;
         }
 
-        #taskList {
-            list-style: none;
-            padding: 0;
+        #taskForm {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border-radius: 4px;
+            border: none;
+            background-color: #5cb85c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
         }
 
         .task {
-            background-color: #fff;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border-left: 5px solid #5cb85c;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .completed {
             text-decoration: line-through;
             color: gray;
+            border-color: #d9534f;
+        }
+
+        .task button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #d9534f;
+            border-radius: 4px;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .task button:hover {
+            background-color: #c9302c;
         }
     </style>
 </head>
 <body>
-    <h1>Liste de tâches</h1>
+    <div class="container">
+        <h1>Task Lists</h1>
 
-    <form id="taskForm">
-        <input type="text" id="taskInput" placeholder="Nouvelle tâche..." required />
-        <button type="submit">Ajouter une tâche</button>
-    </form>
+        <form id="taskForm">
+            <input type="text" id="taskInput" placeholder="Nouvelle tâche..." required />
 
-    <ul id="taskList"></ul>
+            <!-- Nouveau champ : Catégories -->
+            <select id="categoryInput">
+                <option value="Personnel">Personal</option>
+                <option value="Travail">Work</option>
+                <option value="Autre">Others</option>
+            </select>
+
+            <!-- Nouveau champ : Priorité -->
+            <select id="priorityInput">
+                <option value="Basse">Low</option>
+                <option value="Moyenne">Medium</option>
+                <option value="Haute">High</option>
+            </select>
+
+            <!-- Nouveau champ : Date d'échéance -->
+            <input type="date" id="dueDateInput" required />
+
+            <button type="submit">Add a task</button>
+        </form>
+
+        <ul id="taskList"></ul>
+    </div>
 
     <script src="app.js"></script>
 </body>

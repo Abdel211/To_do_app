@@ -6,9 +6,7 @@ app.use(express.json());
 app.use(express.static('public'));
 
 let tasks = [
-    { id: 1, title: "Apprendre Docker", completed: false },
-    { id: 2, title: "Créer une application To-Do", completed: false }
-];
+    ];
 
 // Obtenir toutes les tâches
 app.get('/tasks', (req, res) => {
@@ -20,6 +18,9 @@ app.post('/tasks', (req, res) => {
     const newTask = { 
         id: tasks.length + 1, 
         title: req.body.title, 
+        category: req.body.category, 
+        priority: req.body.priority, 
+        dueDate: req.body.dueDate,
         completed: false 
     };
     tasks.push(newTask);
@@ -33,7 +34,7 @@ app.put('/tasks/:id', (req, res) => {
         task.completed = true;
         res.json(task);
     } else {
-        res.status(404).send('Tâche non trouvée');
+        res.status(404).send('Task not Found');
     }
 });
 
@@ -43,6 +44,6 @@ app.delete('/tasks/:id', (req, res) => {
     res.status(204).send();
 });
 
-app.listen(port, () => {
-    console.log(`Application To-Do en cours d'exécution sur http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Application To-Do exécuted on http://0.0.0.0:${port}`);
 });

@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskList = document.getElementById('taskList');
     const taskForm = document.getElementById('taskForm');
     const taskInput = document.getElementById('taskInput');
+    const categoryInput = document.getElementById('categoryInput');
+    const priorityInput = document.getElementById('priorityInput');
+    const dueDateInput = document.getElementById('dueDateInput');
 
     // Fonction pour récupérer et afficher les tâches
     const fetchTasks = () => {
@@ -16,9 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         li.classList.add('completed');
                     }
                     li.innerHTML = `
-                        ${task.title}
-                        <button onclick="completeTask(${task.id})">Terminer</button>
-                        <button onclick="deleteTask(${task.id})">Supprimer</button>
+                        <div>
+                            <strong>${task.title}</strong> - ${task.category} - Priorité: ${task.priority}
+                            <br>Date d'échéance: ${task.dueDate}
+                        </div>
+                        <div>
+                            <button onclick="completeTask(${task.id})">Terminer</button>
+                            <button onclick="deleteTask(${task.id})">Supprimer</button>
+                        </div>
                     `;
                     taskList.appendChild(li);
                 });
@@ -32,17 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
     taskForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const title = taskInput.value;
+        const category = categoryInput.value;
+        const priority = priorityInput.value;
+        const dueDate = dueDateInput.value;
 
         fetch('/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ title })
+            body: JSON.stringify({ title, category, priority, dueDate })
         })
         .then(response => response.json())
         .then(() => {
             taskInput.value = '';
+            categoryInput.value = 'Personnel';
+            priorityInput.value = 'Basse';
+            dueDateInput.value = '';
             fetchTasks();
         });
     });
