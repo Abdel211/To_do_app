@@ -36,30 +36,33 @@ document.addEventListener('DOMContentLoaded', () => {
     // Appeler fetchTasks au chargement de la page
     fetchTasks();
 
-    // Ajouter une nouvelle tâche
     taskForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Empêche le rechargement de la page par défaut
         const title = taskInput.value;
         const category = categoryInput.value;
         const priority = priorityInput.value;
         const dueDate = dueDateInput.value;
-
-        fetch('/tasks', {
+    
+        fetch('http://localhost:3000/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ title, category, priority, dueDate })
         })
+        
         .then(response => response.json())
         .then(() => {
+            // Réinitialise le formulaire après soumission réussie
             taskInput.value = '';
             categoryInput.value = 'Personnel';
             priorityInput.value = 'Basse';
             dueDateInput.value = '';
-            fetchTasks();
-        });
+            fetchTasks(); // Recharge la liste des tâches
+        })
+        .catch((error) => console.error('Erreur lors de l\'ajout de la tâche:', error));
     });
+    
 
     // Marquer une tâche comme terminée
     window.completeTask = (id) => {
@@ -76,4 +79,5 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(() => fetchTasks());
     };
+    app.use(express.static('public'));
 });
