@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application To-Do</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #taskForm {
+            margin-bottom: 20px;
+        }
+
+        #taskList {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+    <h1>Liste de tâches</h1>
+
+    <form id="taskForm">
+        <input type="text" id="taskInput" placeholder="Nouvelle tâche..." required />
+        <button type="submit">Ajouter une tâche</button>
+    </form>
+
+    <ul id="taskList"></ul>
+
+    <script src="app.js"></script>
+</body>
+</html>
