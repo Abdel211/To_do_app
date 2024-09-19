@@ -5,66 +5,77 @@ document.addEventListener('DOMContentLoaded', () => {
     const categoryInput = document.getElementById('categoryInput');
     const priorityInput = document.getElementById('priorityInput');
     const dueDateInput = document.getElementById('dueDateInput');
+    const darkModeToggle = document.getElementById('darkModeToggle');
 
-    // Fonction pour récupérer et afficher les tâches
+    // Fonction pour charger et afficher toutes les tâches
     const fetchTasks = () => {
         fetch('/tasks')
             .then(response => response.json())
             .then(tasks => {
                 taskList.innerHTML = '';
                 tasks.forEach(task => {
-                    const li = document.createElement('li');
-                    li.className = 'task';
-                    if (task.completed) {
-                        li.classList.add('completed');
-                    }
-                    li.innerHTML = `
-                        <div>
-                            <strong>${task.title}</strong> - ${task.category} - Priorité: ${task.priority}
-                            <br>Date d'échéance: ${task.dueDate}
-                        </div>
-                        <div>
-                            <button onclick="completeTask(${task.id})">Terminer</button>
-                            <button onclick="deleteTask(${task.id})">Supprimer</button>
-                        </div>
-                    `;
-                    taskList.appendChild(li);
+                    createTaskElement(task);
                 });
             });
     };
 
-    // Appeler fetchTasks au chargement de la page
+    // Fonction pour créer un élément de tâche dans la liste
+    const createTaskElement = (task) => {
+        const li = document.createElement('li');
+        li.className = 'task';
+        if (task.completed) {
+            li.classList.add('completed');
+        }
+        li.innerHTML = `
+            <div>
+                <strong>${task.title}</strong> - ${task.category} - Priority: ${task.priority}
+                <br>Due date: ${task.dueDate}
+            </div>
+            <div>
+                <button onclick="completeTask(${task.id})"><i class="fa fa-check"></i></button>
+                <button onclick="deleteTask(${task.id})"><i class="fa fa-trash"></i></button>
+            </div>
+        `;
+        taskList.appendChild(li);
+    };
+
+    // Charger les tâches lors du chargement de la page
     fetchTasks();
 
+    // Soumettre une nouvelle tâche
     taskForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Empêche le rechargement de la page par défaut
+        e.preventDefault();
         const title = taskInput.value;
         const category = categoryInput.value;
         const priority = priorityInput.value;
         const dueDate = dueDateInput.value;
-    
-        fetch('http://localhost:3000/tasks', {
+
+        fetch('/tasks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ title, category, priority, dueDate })
         })
-        
         .then(response => response.json())
         .then(() => {
-            // Réinitialise le formulaire après soumission réussie
+            Swal.fire({
+                icon: 'success',
+                title: 'Task Added',
+                text: 'Your task has been added successfully.',
+                timer: 2000,
+                showConfirmButton: false
+            });
             taskInput.value = '';
-            categoryInput.value = 'Personnel';
-            priorityInput.value = 'Basse';
+            categoryInput.value = 'Personal';
+            priorityInput.value = 'Low';
             dueDateInput.value = '';
-            fetchTasks(); // Recharge la liste des tâches
+            fetchTasks(); // Reload all tasks
         })
-        .catch((error) => console.error('Erreur lors de l\'ajout de la tâche:', error));
+        .catch((error) => console.error('Error adding task:', error));
     });
-    
 
-    // Marquer une tâche comme terminée
+    // Compléter une tâche
     window.completeTask = (id) => {
         fetch(`/tasks/${id}`, {
             method: 'PUT'
@@ -79,5 +90,53 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(() => fetchTasks());
     };
-    app.use(express.static('public'));
+
+    // Activer/Désactiver le mode sombre
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        document.querySelectorAll('.task').forEach(task => {
+            task.classList.toggle('dark-mode');
+        });
+    });
+
+    // Filtrer les tâches importantes
+    document.getElementById('importantTasks').addEventListener('click', () => {
+        fetch('/tasks/important')
+            .then(response => response.json())
+            .then(tasks => {
+                taskList.innerHTML = '';
+                tasks.forEach(task => {
+                    createTaskElement(task);
+                });
+            });
+    });
+
+    // Filtrer les tâches planifiées
+    document.getElementById('plannedTasks').addEventListener('click', () => {
+        fetch('/tasks/planned')
+            .then(response => response.json())
+            .then(tasks => {
+                taskList.innerHTML = '';
+                tasks.forEach(task => {
+                    createTaskElement(task);
+                });
+            });
+    });
+
+    // Filtrer les tâches complétées
+    document.getElementById('completedTasks').addEventListener('click', () => {
+        fetch('/tasks/completed')
+            .then(response => response.json())
+            .then(tasks => {
+                taskList.innerHTML = '';
+                tasks.forEach(task => {
+                    createTaskElement(task);
+                });
+            });
+    });
+
+    // Filtrer toutes les tâches
+    document.getElementById('allTasks').addEventListener('click', () => {
+        fetchTasks();
+    });
 });
