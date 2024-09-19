@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.static('public'));
 
 let tasks = [
     { id: 1, title: "Apprendre Docker", completed: false },
