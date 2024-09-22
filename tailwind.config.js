@@ -1,11 +1,10 @@
 module.exports = {
   content: [
-    './public/**/*.html',  
-    './src/**/*.css',      
-    './public/**/*.js', 
+    './client/**/*.html',
+    './client/**/*.js',
   ],
   theme: {
     extend: {},
   },
   plugins: [],
-}
+};
