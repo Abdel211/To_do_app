@@ -4,13 +4,14 @@
   "description": "A To-Do List application with Tailwind CSS and JavaScript",
   "main": "server/app.js",
   "scripts": {
-  "build:css": "tailwindcss -i ./tailwind.css -o ./client/assets/css/styles.css",
-  "start": "node server/app.js"
-},
+    "build:css": "tailwindcss -i ./tailwind.css -o ./client/assets/css/styles.css",
+    "start": "node server/app.js"
+  },
   "dependencies": {
     "compression": "^1.7.4",
     "express": "^4.21.0",
-    "helmet": "^7.1.0"
+    "helmet": "^7.1.0",
+    "mongoose": "^8.6.3"
   },
   "devDependencies": {
     "jest": "^27.0.0",

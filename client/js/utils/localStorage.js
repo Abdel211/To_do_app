@@ -1,7 +1,7 @@
-export const getTasksFromLocalStorage = () => {
-    return JSON.parse(localStorage.getItem('tasks')) || [];
+export const getTasksFromLocalStorage = (listName = 'Ma Journée') => {
+    return JSON.parse(localStorage.getItem(listName)) || [];
 };
 
-export const saveTasksToLocalStorage = (tasks) => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+export const saveTasksToLocalStorage = (listName, tasks) => {
+    localStorage.setItem(listName, JSON.stringify(tasks));
 };
